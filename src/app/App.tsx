@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { Loader } from './components/Loader';
 import { Landing } from './pages/Landing';
@@ -40,7 +40,7 @@ const App = () => {
   }
 
   return (
-    <BrowserRouter>
+    <>
       <ScrollToTop />
       <Layout>
         <Routes>
@@ -66,7 +66,7 @@ const App = () => {
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </Layout>
-    </BrowserRouter>
+    </>
   );
 };
 

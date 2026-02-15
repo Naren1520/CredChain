@@ -4,6 +4,7 @@ import { Button } from './UI';
 import { Menu, X, Globe, Lock } from 'lucide-react';
 import { clsx } from 'clsx';
 import { Toaster } from 'sonner';
+import { useAuth } from '../auth/AuthProvider';
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -63,7 +64,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
               {isDashboard ? (
                 <div className="flex items-center gap-4">
                   <span className="text-sm text-slate-500">Welcome, User</span>
-                   <Button variant="outline" size="sm" onClick={() => window.location.href = '/'}>Logout</Button>
+                  <AuthLogout />
                 </div>
               ) : (
                 <div className="flex items-center gap-3 ml-4">
@@ -161,5 +162,12 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
         </div>
       </footer>
     </div>
+  );
+};
+
+const AuthLogout = () => {
+  const { logout } = useAuth();
+  return (
+    <Button variant="outline" size="sm" onClick={logout}>Logout</Button>
   );
 };

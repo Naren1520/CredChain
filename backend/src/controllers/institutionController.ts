@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import prisma from '../prisma.js';
+import prisma from '../prisma';
 import crypto from 'crypto';
 import fs from 'fs/promises';
 import path from 'path';
-import { BlockchainService } from '../services/blockchain.js';
+import { BlockchainService } from '../services/blockchain';
 
 const uploadsDir = path.join(process.cwd(), 'uploads');
 
@@ -58,7 +58,7 @@ export async function uploadCertificate(req: Request, res: Response) {
       }
     });
     // audit
-    try { await import('../middleware/audit.js').then(m => m.audit('upload_certificate', req, { certificateId, institutionId: (req as any).user.sub })); } catch(e){}
+    try { await import('../middleware/audit').then(m => m.audit('upload_certificate', req, { certificateId, institutionId: (req as any).user.sub })); } catch(e){}
 
     return res.json({ ok: true, cert });
   } catch (err: any) {

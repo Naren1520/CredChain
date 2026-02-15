@@ -1,6 +1,6 @@
 import express from 'express';
-import { institutionLogin, refreshToken, logout } from '../controllers/authController.js';
-import { institutionLoginSchema } from '../validators/auth.js';
+import { institutionLogin, refreshToken, logout } from '../controllers/authController';
+import { institutionLoginSchema } from '../validators/auth';
 import { z } from 'zod';
 import { Request, Response, NextFunction } from 'express';
 

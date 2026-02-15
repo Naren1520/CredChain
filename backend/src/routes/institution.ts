@@ -1,12 +1,12 @@
 import express from 'express';
 import multer from 'multer';
-import { requireAuth } from '../middleware/auth.js';
-import { uploadCertificate } from '../controllers/institutionController.js';
+import { requireAuth } from '../middleware/auth';
+import { uploadCertificate } from '../controllers/institutionController';
 
 const router = express.Router();
 
 const upload = multer({ dest: 'uploads/', limits: { fileSize: 20 * 1024 * 1024 } });
-import { uploadCertificateSchema } from '../validators/upload.js';
+import { uploadCertificateSchema } from '../validators/upload';
 import { Request, Response, NextFunction } from 'express';
 
 function validateForm(schema:any){
@@ -21,7 +21,7 @@ router.post('/certificates/upload', requireAuth(['INSTITUTION_ADMIN','INSTITUTIO
 router.get('/certificates', requireAuth(['INSTITUTION_ADMIN','INSTITUTION_OFFICER']), async (req, res) => {
   // list by institutionId (user sub)
   const institutionId = (req as any).user.sub;
-  const prisma = (await import('../prisma.js')).default;
+  const prisma = (await import('../prisma')).default;
   const certs = await prisma.certificate.findMany({ where: { institutionId } });
   res.json(certs);
 });
@@ -29,7 +29,7 @@ router.get('/certificates', requireAuth(['INSTITUTION_ADMIN','INSTITUTION_OFFICE
 // Search students by name or SEID for the institution (used when issuing)
 router.get('/students', requireAuth(['INSTITUTION_ADMIN','INSTITUTION_OFFICER']), async (req, res) => {
   const q = (req.query.q as string) || '';
-  const prisma = (await import('../prisma.js')).default;
+  const prisma = (await import('../prisma')).default;
   const students = await prisma.student.findMany({
     where: {
       OR: [

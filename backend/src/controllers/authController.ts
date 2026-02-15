@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import prisma from '../prisma.js';
+import prisma from '../prisma';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
@@ -32,7 +32,7 @@ export async function institutionLogin(req: Request, res: Response) {
   await prisma.refreshToken.create({ data: { token: refresh, institutionUserId: user.id, expiresAt: new Date(Date.now() + 7 * 24 * 3600 * 1000) } });
 
   // audit
-  try { await import('../middleware/audit.js').then(m => m.audit('institution_login', req, { email })); } catch(e){}
+  try { await import('../middleware/audit').then(m => m.audit('institution_login', req, { email })); } catch(e){}
   res.json({ access, refresh });
 }
 

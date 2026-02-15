@@ -1,6 +1,6 @@
 import express from 'express';
-import prisma from '../prisma.js';
-import { BlockchainService } from '../services/blockchain.js';
+import prisma from '../prisma';
+import { BlockchainService } from '../services/blockchain';
 
 const router = express.Router();
 

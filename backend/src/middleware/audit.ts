@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import prisma from '../prisma.js';
+import prisma from '../prisma';
 
 export async function audit(action: string, req: Request, metadata?: any) {
   try {

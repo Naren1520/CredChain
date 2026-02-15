@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import prisma from '../prisma.js';
-import { BlockchainService } from '../services/blockchain.js';
+import prisma from '../prisma';
+import { BlockchainService } from '../services/blockchain';
 
 export async function approveInstitution(req: Request, res: Response) {
   const { institutionId } = req.body;
@@ -30,5 +30,5 @@ export async function whitelistWallet(req: Request, res: Response) {
   const result = await bc.setIssuer(wallet, !!allowed);
 
   res.json({ ok: true, result });
-  try { await import('../middleware/audit.js').then(m => m.audit('whitelist_wallet', req, { institutionId, wallet, allowed })); } catch(e){}
+  try { await import('../middleware/audit').then(m => m.audit('whitelist_wallet', req, { institutionId, wallet, allowed })); } catch(e){}
 }

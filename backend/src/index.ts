@@ -6,12 +6,12 @@ import cors from 'cors';
 import path from 'path';
 import fs from 'fs';
 import swaggerUi from 'swagger-ui-express';
-import institutionRoutes from './routes/institution.js';
-import verifyRoutes from './routes/verify.js';
-import authRoutes from './routes/auth.js';
-import adminRoutes from './routes/admin.js';
-import studentRoutes from './routes/student.js';
-import logger from './logger.js';
+import institutionRoutes from './routes/institution';
+import verifyRoutes from './routes/verify';
+import authRoutes from './routes/auth';
+import adminRoutes from './routes/admin';
+import studentRoutes from './routes/student';
+import logger from './logger';
 
 dotenv.config();
 

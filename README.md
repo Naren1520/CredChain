@@ -69,7 +69,7 @@ CredChain provides:
 │  │ React Router     │  │  │ Prisma ORM (PostgreSQL)          │  │
 │  │ Real-time Auth   │  │  │ JWT + Refresh Tokens             │  │
 │  │ QR Scanner       │  │  │ Multer File Upload               │  │
-│  │ Motion Animation  │  │  │ Zod Validation + Helmet Security│  │
+│  │ Motion Animation │  │  │ Zod Validation + Helmet Security │  │
 │  └────────┬─────────┘  │  └──────────────┬───────────────────┘  │
 │           │            │                 │                      │
 │           └────────────┼─────────────────┘                      │
@@ -77,8 +77,8 @@ CredChain provides:
 │         HTTP/REST API (Port 4000)                               │
 └────────────────────────┼────────────────────────────────────────┘
                          │
-        ┌────────────────┴────────────────┐
-        │                                 │
+        ┌────────────────┴───────────────┐
+        │                                │
     ┌───▼──────────┐          ┌──────────▼────┐
     │  PostgreSQL  │          │  Blockchain   │
     │  Database    │          │  (Solidity)   │
@@ -372,22 +372,13 @@ We welcome contributions! Please follow these guidelines:
 **Production-Ready**: Complete documentation, error handling, logging  
 **Technical Depth**: Full-stack implementation with 5000+ lines of code  
 
-**Winning Features**:
+# key points
 - Zero-trust architecture with immutable blockchain records
 - Multi-stakeholder platform (Institutions, Admins, Students, Public)
 - Instant QR verification prevents fraud
 - RBAC ensures appropriate access control
 - Comprehensive audit logging for compliance
 - Real-time token refresh maintains security
-
----
-
-## Additional Resources
-
-- [Blockchain Contract Documentation](backend/contracts/CredChainRegistry.sol)
-- [API Swagger Documentation](http://localhost:4000/docs)
-- [Project Architecture Diagram](PROJECT_DOCUMENTATION.md)
-- [Frontend Component Library](src/app/components/UI.tsx)
 
 ---
 
@@ -399,3 +390,4 @@ We welcome contributions! Please follow these guidelines:
 - https://narensj.netlify.app
 
   
+---  
