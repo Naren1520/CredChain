@@ -20,15 +20,15 @@
 ### Our Solution
 
 CredChain provides:
-- ✅ **Blockchain-Verified Certificates**: Immutable records with cryptographic proof
-- ✅ **Instant Digital Verification**: QR scanning and ID lookup – credentials verified in seconds
-- ✅ **Risk-Free Portal**: Institution-controlled issuance with RBAC and approval workflows
-- ✅ **Multi-stakeholder Support**: Institutions, Government Admins, Students, and Public Verifiers
-- ✅ **Compliance-Ready**: Audit logs, tamper detection, and IT Act 2000 compliance
+- **Blockchain-Verified Certificates**: Immutable records with cryptographic proof
+- **Instant Digital Verification**: QR scanning and ID lookup – credentials verified in seconds
+- **Risk-Free Portal**: Institution-controlled issuance with RBAC and approval workflows
+- **Multi-stakeholder Support**: Institutions, Government Admins, Students, and Public Verifiers
+- **Compliance-Ready**: Audit logs, tamper detection, and IT Act 2000 compliance
 
 ---
 
-## 🎯 Key Features
+## Key Features
 
 ### For Educational Institutions
 - **Secure Digital Issuance**: Upload and digitally sign academic records
@@ -56,11 +56,11 @@ CredChain provides:
 
 ---
 
-## 🏗 Technical Architecture
+## Technical Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                     CredChain Platform                           │
+│                     CredChain Platform                          │
 ├────────────────────────┬────────────────────────────────────────┤
 │   Frontend (React)     │         Backend (Node.js/Express)      │
 │  ┌──────────────────┐  │  ┌──────────────────────────────────┐  │
@@ -68,12 +68,12 @@ CredChain provides:
 │  │ React Router     │  │  │ Prisma ORM (PostgreSQL)          │  │
 │  │ Real-time Auth   │  │  │ JWT + Refresh Tokens             │  │
 │  │ QR Scanner       │  │  │ Multer File Upload               │  │
-│  │ Motion Animation  │  │  │ Zod Validation + Helmet Security │  │
+│  │ Motion Animation  │  │  │ Zod Validation + Helmet Security│  │
 │  └────────┬─────────┘  │  └──────────────┬───────────────────┘  │
-│           │            │                 │                       │
-│           └────────────┼─────────────────┘                       │
-│                        │                                          │
-│         HTTP/REST API (Port 4000)                                │
+│           │            │                 │                      │
+│           └────────────┼─────────────────┘                      │
+│                        │                                        │
+│         HTTP/REST API (Port 4000)                               │
 └────────────────────────┼────────────────────────────────────────┘
                          │
         ┌────────────────┴────────────────┐
@@ -106,7 +106,7 @@ CredChain provides:
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Node.js 18+ and npm/pnpm
@@ -197,7 +197,7 @@ npm run dev       # Vite dev server on http://localhost:5173
 
 ---
 
-## 📋 API Endpoints
+## API Endpoints
 
 ### Authentication
 - `POST /auth/institution/login` - Institution login
@@ -220,7 +220,7 @@ npm run dev       # Vite dev server on http://localhost:5173
 
 ---
 
-## 🔐 Security Features
+## Security Features
 
 ### Authentication & Authorization
 - **JWT-based Auth**: Short-lived access tokens + refresh token rotation
@@ -246,7 +246,7 @@ npm run dev       # Vite dev server on http://localhost:5173
 
 ---
 
-## 🧪 Testing & Deployment
+## Testing & Deployment
 
 ### Run Tests (Backend)
 ```bash
@@ -282,7 +282,7 @@ git push origin main  # If connected to CI/CD
 
 ---
 
-## 📊 Database Schema
+## Database Schema
 
 CredChain uses **Prisma ORM** with the following key models:
 
@@ -297,7 +297,7 @@ CredChain uses **Prisma ORM** with the following key models:
 
 ---
 
-## 🎓 Demo Credentials
+##  Demo Credentials
 
 For testing (seeded data):
 
@@ -312,7 +312,7 @@ For testing (seeded data):
 
 ---
 
-## 🔄 Blockchain Integration (Optional)
+## Blockchain Integration
 
 CredChain supports smart contract integration via Hardhat:
 
@@ -336,7 +336,7 @@ npx hardhat run scripts/deploy.ts --network sepolia
 
 ---
 
-## 📈 Performance Metrics
+## Performance Metrics
 
 - **Frontend Build**: ~22s (optimized for production)
 - **API Response Time**: <100ms (cached responses)
@@ -346,7 +346,7 @@ npx hardhat run scripts/deploy.ts --network sepolia
 
 ---
 
-## 🤝 Contributing
+## Contribution
 
 We welcome contributions! Please follow these guidelines:
 
@@ -358,30 +358,17 @@ We welcome contributions! Please follow these guidelines:
 
 ---
 
-## 📝 License
 
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
----
-
-## 📞 Support & Contact
-
-- **Issues**: Open an issue on GitHub for bugs/feature requests
-- **Documentation**: See [PROJECT_DOCUMENTATION.md](PROJECT_DOCUMENTATION.md)
-- **Backend Setup**: See [backend/README_BACKEND.md](backend/README_BACKEND.md)
-
----
-
-## 🏆 Hackathon Submission
 
 **CredChain** is submitted as a comprehensive solution for the education verification challenge, demonstrating:
 
-✅ **Innovation**: Blockchain + cryptography + modern web stack  
-✅ **Scalability**: Microservices-ready architecture  
-✅ **Security**: Enterprise-grade authentication & audit trails  
-✅ **UX Excellence**: Intuitive interfaces for all stakeholder types  
-✅ **Production-Ready**: Complete documentation, error handling, logging  
-✅ **Technical Depth**: Full-stack implementation with 5000+ lines of code  
+**Innovation**: Blockchain + cryptography + modern web stack  
+**Scalability**: Microservices-ready architecture  
+**Security**: Enterprise-grade authentication & audit trails  
+**UX Excellence**: Intuitive interfaces for all stakeholder types  
+**Production-Ready**: Complete documentation, error handling, logging  
+**Technical Depth**: Full-stack implementation with 5000+ lines of code  
 
 **Winning Features**:
 - Zero-trust architecture with immutable blockchain records
@@ -393,7 +380,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ---
 
-## 📚 Additional Resources
+## Additional Resources
 
 - [Blockchain Contract Documentation](backend/contracts/CredChainRegistry.sol)
 - [API Swagger Documentation](http://localhost:4000/docs)
@@ -402,8 +389,11 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ---
 
-**Made with ❤️ for Education Integrity**
+## Contact
 
-*Last Updated: February 2026*
+- Naren S J
+- 8296833381
+- narensonu1520@gmail.com
+-https://narensj.netlify.app
 
   
