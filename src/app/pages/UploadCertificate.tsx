@@ -3,11 +3,15 @@ import { Button, Input, Card, CardHeader, CardTitle, CardContent, Label, Select,
 import { Search, Upload, FileText, CheckCircle2, ArrowLeft, ArrowRight, UserCheck, ShieldCheck } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { DataManager } from '../utils/DataManager';
+import { api, getAuthHeader, fetchWithAuth } from '../api';
 import QRCode from "react-qr-code";
 
 export const UploadCertificate = () => {
   const [step, setStep] = useState(1);
   const [studentFound, setStudentFound] = useState(false);
+  const [students, setStudents] = useState<any[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedStudent, setSelectedStudent] = useState<any | null>(null);
   const [loading, setLoading] = useState(false);
   const [successData, setSuccessData] = useState<any>(null);
   const navigate = useNavigate();
@@ -21,13 +25,20 @@ export const UploadCertificate = () => {
     type: "Degree Certificate"
   });
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
+    try {
+      const res = await fetchWithAuth(api(`/institution/students?q=${encodeURIComponent(searchQuery)}`));
       setLoading(false);
+      if (!res.ok) return alert('Search failed');
+      const body = await res.json();
+      setStudents(body.students || []);
       setStudentFound(true);
-    }, 800);
+    } catch (err) {
+      setLoading(false);
+      alert('Search error');
+    }
   };
 
   const handleNext = () => setStep(s => s + 1);
@@ -38,26 +49,40 @@ export const UploadCertificate = () => {
     handleNext();
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setLoading(true);
-    // Create Certificate
-    const newCert = {
-      id: `CERT-${new Date().getFullYear()}-${Math.floor(Math.random() * 100000)}`,
-      studentName: "Aditya Kumar",
-      seid: "9827 1234 5678",
-      courseName: formData.course, // Adjusted to match DataManager type
-      institution: "University of Delhi",
-      year: formData.year,
-      grade: formData.cgpa || "9.0",
-      type: formData.type,
-      dob: "12-05-2002"
-    };
+    // Try to upload to backend
+    const inputFile = (document.querySelector('input[type=file]') as HTMLInputElement);
+    const file = inputFile?.files?.[0];
+    if (!file) { alert('Please select a PDF file'); setLoading(false); return; }
 
-    DataManager.addCertificate(newCert).then((cert) => {
+    const fd = new FormData();
+    const metadata = {
+      course: formData.course,
+      specialization: formData.specialization,
+      year: formData.year,
+      cgpa: formData.cgpa,
+      type: formData.type
+    };
+    fd.append('file', file);
+    if (!selectedStudent) { alert('Please select a student'); setLoading(false); return; }
+    fd.append('studentId', selectedStudent.seid || selectedStudent.id);
+    fd.append('type', formData.type);
+    fd.append('meta', JSON.stringify(metadata));
+    try {
+      const res = await fetchWithAuth(api('/institution/certificates/upload'), {
+        method: 'POST',
+        body: fd
+      });
       setLoading(false);
-      setSuccessData(cert);
-      setStep(6); // Go to success step
-    });
+      if (!res.ok) return alert('Upload failed');
+      const body = await res.json();
+      setSuccessData(body.cert);
+      setStep(6);
+    } catch (err) {
+      setLoading(false);
+      alert('Upload error');
+    }
   };
 
   return (
@@ -94,22 +119,29 @@ export const UploadCertificate = () => {
               <div className="space-y-6">
                 <h2 className="text-xl font-bold text-[#0B1B3A]">Step 1: Student Lookup</h2>
                 <form onSubmit={handleSearch} className="flex gap-4">
-                  <Input placeholder="Enter Student Education ID (SEID) or Aadhaar" className="flex-1" />
+                  <Input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Enter Student Education ID (SEID) or Aadhaar" className="flex-1" />
                   <Button type="submit" isLoading={loading}>Search</Button>
                 </form>
 
                 {studentFound && (
-                  <div className="bg-emerald-50 border border-emerald-100 rounded-lg p-4 flex items-center gap-4 animate-in fade-in slide-in-from-top-2">
-                    <div className="h-12 w-12 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700">
-                      <UserCheck />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-bold text-[#0B1B3A]">Aditya Kumar</h3>
-                      <p className="text-sm text-slate-600">DOB: 12-05-2002 • SEID: 9827 1234 5678</p>
-                    </div>
-                    <Button variant="outline" size="sm" onClick={handleNext} className="border-emerald-200 text-emerald-800 hover:bg-emerald-100">
-                      Confirm & Proceed
-                    </Button>
+                  <div className="space-y-3">
+                    {students.length === 0 && (
+                      <div className="text-sm text-slate-500">No students found for that query.</div>
+                    )}
+                    {students.map((s) => (
+                      <div key={s.id} className="bg-emerald-50 border border-emerald-100 rounded-lg p-4 flex items-center gap-4 animate-in fade-in slide-in-from-top-2">
+                        <div className="h-12 w-12 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700">
+                          <UserCheck />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-bold text-[#0B1B3A]">{s.name}</h3>
+                          <p className="text-sm text-slate-600">DOB: {s.dob || 'N/A'} • SEID: {s.seid || s.id}</p>
+                        </div>
+                        <Button variant="outline" size="sm" onClick={() => { setSelectedStudent(s); setStep(2); }} className="border-emerald-200 text-emerald-800 hover:bg-emerald-100">
+                          Confirm & Proceed
+                        </Button>
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>
@@ -212,11 +244,11 @@ export const UploadCertificate = () => {
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <span className="block text-slate-500 text-xs uppercase tracking-wider">Student</span>
-                        <span className="font-semibold text-slate-900">Aditya Kumar</span>
+                        <span className="font-semibold text-slate-900">{selectedStudent?.name || '—'}</span>
                       </div>
                       <div>
                         <span className="block text-slate-500 text-xs uppercase tracking-wider">SEID</span>
-                        <span className="font-semibold text-slate-900">9827 1234 5678</span>
+                        <span className="font-semibold text-slate-900">{selectedStudent?.seid || selectedStudent?.id || '—'}</span>
                       </div>
                       <div>
                         <span className="block text-slate-500 text-xs uppercase tracking-wider">Certificate</span>
@@ -261,12 +293,12 @@ export const UploadCertificate = () => {
                        <QRCode
                         size={256}
                         style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-                        value={successData.id}
+                        value={successData.certificateId || successData.id}
                         viewBox={`0 0 256 256`}
                         />
                     </div>
                     <div className="text-sm font-mono bg-slate-100 px-3 py-1 rounded text-slate-700">
-                      ID: {successData.id}
+                      ID: {successData.certificateId || successData.id}
                     </div>
                     <p className="text-xs text-slate-500">
                       Scan this QR code to verify instantly.

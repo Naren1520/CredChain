@@ -1,0 +1,99 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Student {
+  id        String   @id @default(uuid())
+  seid      String   @unique
+  name      String
+  dob       DateTime
+  phone     String?
+  email     String?
+  createdAt DateTime @default(now())
+  certificates Certificate[]
+}
+
+model Institution {
+  id           String   @id @default(uuid())
+  name         String
+  govtRegNo    String   @unique
+  status       InstitutionStatus @default(PENDING)
+  wallet       String?
+  users        InstitutionUser[]
+  certificates Certificate[]
+  createdAt    DateTime @default(now())
+}
+
+enum InstitutionStatus {
+  PENDING
+  APPROVED
+  SUSPENDED
+}
+
+model InstitutionUser {
+  id            String   @id @default(uuid())
+  institution   Institution @relation(fields: [institutionId], references: [id])
+  institutionId String
+  role          UserRole
+  name          String
+  email         String   @unique
+  passwordHash  String
+  createdAt     DateTime @default(now())
+  refreshTokens  RefreshToken[]
+}
+
+enum UserRole {
+  STUDENT
+  INSTITUTION_OFFICER
+  INSTITUTION_ADMIN
+  GOV_ADMIN
+}
+
+model Certificate {
+  id           String   @id @default(uuid())
+  certificateId String  @unique
+  student      Student  @relation(fields: [studentId], references: [id])
+  studentId    String
+  institution  Institution @relation(fields: [institutionId], references: [id])
+  institutionId String
+  type         String
+  filePath     String
+  metaJson     Json
+  pdfHash      String
+  chainHash    String?
+  txHash       String?
+  chainNetwork String?
+  issuedAt     DateTime?
+  createdAt    DateTime @default(now())
+  verificationTokens VerificationToken[]
+}
+
+model VerificationToken {
+  token         String   @id
+  certificate   Certificate @relation(fields: [certificateId], references: [certificateId])
+  certificateId String
+  expiresAt     DateTime
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  action    String
+  actorId   String?
+  actorRole UserRole?
+  ip        String?
+  metadata  Json?
+  createdAt DateTime @default(now())
+}
+
+model RefreshToken {
+  token            String   @id
+  institutionUser  InstitutionUser? @relation(fields: [institutionUserId], references: [id])
+  institutionUserId String?
+  expiresAt        DateTime
+  createdAt        DateTime @default(now())
+}

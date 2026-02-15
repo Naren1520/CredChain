@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Button, Input, Card, CardHeader, CardTitle, CardContent, Label, Select } from '../components/UI';
 import { Building2, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { api, getAuthHeader } from '../api';
+
 
 export const InstitutionLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -10,11 +12,23 @@ export const InstitutionLogin = () => {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Simulate API call
-    setTimeout(() => {
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const email = (form.querySelector('#inst-id') as HTMLInputElement).value;
+    const password = (form.querySelector('#password') as HTMLInputElement).value;
+
+    fetch(api('/auth/institution/login'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    }).then(async (r) => {
       setIsLoading(false);
+      if (!r.ok) return alert('Login failed');
+      const data = await r.json();
+      localStorage.setItem('accessToken', data.access);
+      localStorage.setItem('refreshToken', data.refresh);
       navigate('/dashboard/institution');
-    }, 1000);
+    }).catch((e) => { setIsLoading(false); alert('Login error'); });
   };
 
   return (

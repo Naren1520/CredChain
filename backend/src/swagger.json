@@ -1,0 +1,29 @@
+{
+  "openapi": "3.0.0",
+  "info": { "title": "CredChain API", "version": "0.1.0" },
+  "paths": {
+    "/auth/institution/login": {
+      "post": {
+        "summary": "Institution login",
+        "requestBody": { "content": { "application/json": { "schema": { "$ref": "#/components/schemas/InstitutionLogin" } } } },
+        "responses": { "200": { "description": "Tokens" } }
+      }
+    },
+    "/institution/certificates/upload": {
+      "post": { "summary": "Upload certificate (multipart/form-data)" }
+    },
+    "/verify/certificate/{certificateId}": {
+      "get": { "summary": "Verify by certificateId" }
+    },
+    "/verify/token/{token}": { "get": { "summary": "Verify by token" } }
+  },
+  "components": {
+    "schemas": {
+      "InstitutionLogin": {
+        "type": "object",
+        "properties": { "email": { "type": "string" }, "password": { "type": "string" } },
+        "required": ["email", "password"]
+      }
+    }
+  }
+}

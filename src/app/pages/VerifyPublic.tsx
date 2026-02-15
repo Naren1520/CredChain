@@ -116,15 +116,14 @@ export const VerifyPublic = () => {
     setProfileResult(null);
     setError(false);
 
-    try {
+      try {
       if (mode === "certificate") {
-        const data = await DataManager.getById(query);
-        if (data) {
-          setCertificateResult(data);
-        } else {
-          setError(true);
-        }
+        const res = await fetch(`${(import.meta.env.VITE_API_URL as string) || 'http://localhost:4000'}/verify/certificate/${encodeURIComponent(query)}`);
+        if (!res.ok) { setError(true); return; }
+        const json = await res.json();
+        setCertificateResult(json.certificate);
       } else {
+        // Student profile still uses DataManager demo data for now
         const data = await DataManager.getStudentProfile(query);
         if (data) {
           setProfileResult(data);
@@ -139,7 +138,7 @@ export const VerifyPublic = () => {
     }
   };
 
-  const onScanSuccess = (decodedText: string) => {
+  const onScanSuccess = async (decodedText: string) => {
     setQuery(decodedText);
     setShowScanner(false);
     // Auto verify
@@ -147,11 +146,31 @@ export const VerifyPublic = () => {
     setCertificateResult(null);
     setProfileResult(null);
     setError(false);
-    DataManager.getById(decodedText).then((data) => {
+    try {
+      const data = await DataManager.getById(decodedText);
+      if (data) {
+        setCertificateResult(data);
+        setLoading(false);
+        return;
+      }
+    } catch (e) {
+      // ignore
+    }
+
+    // Also try backend verify by token
+    try {
+      const res = await fetch(`${(import.meta.env.VITE_API_URL as string) || 'http://localhost:4000'}/verify/certificate/${encodeURIComponent(decodedText)}`);
+      if (res.ok) {
+        const json = await res.json();
+        setCertificateResult(json.certificate);
+      } else {
+        setError(true);
+      }
+    } catch (e) {
+      // ignore
+    } finally {
       setLoading(false);
-      if (data) setCertificateResult(data);
-      else setError(true);
-    });
+    }
   };
 
   const resetSearch = () => {
