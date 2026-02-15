@@ -299,7 +299,7 @@ CredChain uses **Prisma ORM** with the following key models:
 
 ---
 
-##  Demo Credentials
+## Demo Credentials
 
 For testing (seeded data):
 
@@ -308,9 +308,12 @@ For testing (seeded data):
 - Password: `password123`
 - Institution: `GOVT-001` (Government Demo)
 
+**Public Verifier**:
+- Access the public verification pages (no login required): `/verify` or the QR scan feature
+
 **Demo Student**:
 - SEID: `SEID123`
-- Name: `Aditya Kumar`
+- Name: `Demo Student`
 
 ---
 
