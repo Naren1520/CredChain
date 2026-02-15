@@ -1,5 +1,4 @@
 import React from 'react';
-import { Shield } from 'lucide-react';
 
 export const Loader = () => {
   return (
@@ -14,11 +13,11 @@ export const Loader = () => {
         {/* Main logo container */}
         <div className="mb-12">
           <div className="relative inline-block">
-            {/* Shield icon */}
+            {/* Logo image */}
             <div className="relative">
-              {/* Main shield */}
+              {/* Main logo */}
               <div className="relative bg-[#0B1B3A] rounded-3xl p-8 shadow-lg">
-                <Shield className="w-20 h-20 text-white" strokeWidth={2.5} />
+                <img src="/assets/logo.png" alt="CredChain Logo" className="w-20 h-20" />
                 
                 {/* Verification checkmark overlay */}
                 <div className="absolute -bottom-2 -right-2 bg-[#1A9B50] rounded-full p-2 shadow-md">

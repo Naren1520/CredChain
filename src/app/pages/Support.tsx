@@ -183,7 +183,7 @@ export const Support = () => {
                 </div>
                 <div className="flex items-center gap-3 text-slate-600">
                   <Phone size={16} className="text-[#FF7A00]" />
-                  <span>+91 11-23010101 (Toll Free)</span>
+                  <span>+91 8296833381 (Toll Free)</span>
                 </div>
               </div>
             </CardContent>

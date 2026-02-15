@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom'; // Note: react-router v7 uses 'react-router'
 import { Button } from './UI';
-import { ShieldCheck, Menu, X, Globe, Lock } from 'lucide-react';
+import { Menu, X, Globe, Lock } from 'lucide-react';
 import { clsx } from 'clsx';
 import { Toaster } from 'sonner';
 
@@ -40,7 +40,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2 group">
               <div className="bg-[#0B1B3A] p-2 rounded-lg group-hover:bg-[#FF7A00] transition-colors">
-                <ShieldCheck className="text-white h-6 w-6" />
+                <img src="/assets/logo.png" alt="CredChain Logo" className="h-6 w-6" />
               </div>
               <div className="flex flex-col">
                 <span className="text-xl font-bold text-[#0B1B3A] leading-none">CredChain</span>
@@ -114,7 +114,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <ShieldCheck className="text-white h-6 w-6" />
+              <img src="/assets/logo.png" alt="CredChain Logo" className="h-6 w-6" />
               <span className="text-lg font-bold text-white">CredChain</span>
             </div>
             <p className="opacity-80 leading-relaxed">
@@ -147,7 +147,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
             <ul className="space-y-2">
                <li className="flex items-center gap-2"><Lock size={14}/> Secure Line</li>
               <li>support@CredChain.gov.in</li>
-              <li>+91 11-23010101</li>
+              <li>+91 8296833381</li>
             </ul>
             <div className="mt-6 flex gap-4">
                {/* Social placeholders */}
@@ -157,7 +157,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
           </div>
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-white/10 text-center opacity-60 text-xs">
-          © 2025 CredChain, Ministry of Education, Government of India. All rights reserved.
+          © 2026 CredChain, Ministry of Education, Government of India. All rights reserved.
         </div>
       </footer>
     </div>
