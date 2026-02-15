@@ -33,7 +33,7 @@ router.get('/students', requireAuth(['INSTITUTION_ADMIN','INSTITUTION_OFFICER'])
   const students = await prisma.student.findMany({
     where: {
       OR: [
-        { name: { contains: q, mode: 'insensitive' } },
+        { name: { contains: q } },
         { seid: { contains: q } }
       ]
     },

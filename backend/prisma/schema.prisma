@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 model Student {
@@ -22,36 +22,23 @@ model Institution {
   id           String   @id @default(uuid())
   name         String
   govtRegNo    String   @unique
-  status       InstitutionStatus @default(PENDING)
+  status       String   @default("PENDING")
   wallet       String?
   users        InstitutionUser[]
   certificates Certificate[]
   createdAt    DateTime @default(now())
 }
 
-enum InstitutionStatus {
-  PENDING
-  APPROVED
-  SUSPENDED
-}
-
 model InstitutionUser {
   id            String   @id @default(uuid())
   institution   Institution @relation(fields: [institutionId], references: [id])
   institutionId String
-  role          UserRole
+  role          String
   name          String
   email         String   @unique
   passwordHash  String
   createdAt     DateTime @default(now())
   refreshTokens  RefreshToken[]
-}
-
-enum UserRole {
-  STUDENT
-  INSTITUTION_OFFICER
-  INSTITUTION_ADMIN
-  GOV_ADMIN
 }
 
 model Certificate {
@@ -63,7 +50,7 @@ model Certificate {
   institutionId String
   type         String
   filePath     String
-  metaJson     Json
+  metaJson     String
   pdfHash      String
   chainHash    String?
   txHash       String?
@@ -84,9 +71,9 @@ model AuditLog {
   id        String   @id @default(uuid())
   action    String
   actorId   String?
-  actorRole UserRole?
+  actorRole String?
   ip        String?
-  metadata  Json?
+  metadata  String?
   createdAt DateTime @default(now())
 }
 
