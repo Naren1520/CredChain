@@ -3,6 +3,7 @@
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![Code Quality](https://img.shields.io/badge/code%20quality-A+-brightgreen)](https://github.com)
+[![Live Demo](https://img.shields.io/badge/demo-live-blue)](https://credchain-naren.vercel.app/)
 
 ---
 
@@ -191,7 +192,8 @@ npm run dev       # Vite dev server on http://localhost:5173
 
 ### 5. Access the Platform
 
-- **Frontend**: http://localhost:5173
+- **Frontend (Local)**: http://localhost:5173
+- **Frontend (Deployed)**: https://credchain-naren.vercel.app/
 - **Backend API**: http://localhost:4000
 - **Swagger Docs**: http://localhost:4000/docs
 
@@ -394,6 +396,6 @@ We welcome contributions! Please follow these guidelines:
 - Naren S J
 - 8296833381
 - narensonu1520@gmail.com
--https://narensj.netlify.app
+- https://narensj.netlify.app
 
   
