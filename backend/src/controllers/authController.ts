@@ -20,6 +20,24 @@ function signRefresh(payload: any) {
 
 export async function institutionLogin(req: Request, res: Response) {
   const { email, password } = req.body;
+  
+  // Hardcoded test credentials (works without database)
+  const testCredentials = [
+    { email: 'test@demo.org', password: 'test123' },
+    { email: 'admin@demo.org', password: 'admin123' },
+    { email: 'officer@demo.org', password: 'password123' }
+  ];
+  
+  const testUser = testCredentials.find(u => u.email === email && u.password === password);
+  if (testUser) {
+    // Generate tokens for test user
+    const testInstitutionId = 'test-institution-' + email.split('@')[0];
+    const access = signAccess({ sub: testInstitutionId, role: 'INSTITUTION_ADMIN', uid: 'test-user-' + email });
+    const refresh = signRefresh({ sub: testInstitutionId, role: 'INSTITUTION_ADMIN', uid: 'test-user-' + email });
+    return res.json({ access, refresh });
+  }
+  
+  // Check database credentials (from seed)
   const user = await prisma.institutionUser.findUnique({ where: { email } });
   if (!user) return res.status(401).json({ error: 'Invalid' });
   const ok = await bcrypt.compare(password, user.passwordHash);
